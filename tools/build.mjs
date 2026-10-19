@@ -29,7 +29,7 @@ html = html.replace(/<style(?:\s[^>]*)?>[\s\S]*?<\/style>/,
 html = html.replace(/\s*<script id="site-app"[^>]*><\/script>/g, '');
 // Migration from the previous generated inline application. Inline defer never deferred it.
 html = html.replace(/\s*<script defer>[\s\S]*?<\/script>/g, '');
-html = html.replace('</head>', `  <script id="site-app" src="${appPath}" defer></script>\n</head>`);
+html = html.replace('</body>', `  <script id="site-app" src="${appPath}" defer></script>\n</body>`);
 html = html.replace(/<noscript>\s*<link[^>]*fonts\.googleapis\.com[^>]*>\s*<\/noscript>/g, '');
 html = html.replace(/\s*<link[^>]*href="https:\/\/fonts\.(?:googleapis|gstatic)\.com[^>]*>/g, '');
 html = html.replace(/assets\/benefit_check\.(?:png|webp)/g, 'assets/perf/benefit-check-52.e0e9b9695a.webp');

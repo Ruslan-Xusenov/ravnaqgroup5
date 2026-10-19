@@ -108,14 +108,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   ];
 
-  const initialHeadlineIndex = window.__INITIAL_HEADLINE_INDEX__;
-  const hasInitialHeadline = Number.isInteger(initialHeadlineIndex)
-    && initialHeadlineIndex >= 0
-    && initialHeadlineIndex < HOOK_ITEMS.length;
-  let currentActiveIndex = hasInitialHeadline
-    ? initialHeadlineIndex
-    : Math.floor(Math.random() * HOOK_ITEMS.length);
-  
+  const urlParams = new URLSearchParams(window.location.search);
+  const vParam = urlParams.get('v');
+  let currentActiveIndex = 3; // matches the static pre-rendered HTML (id: 4)
+
+  if (vParam && parseInt(vParam, 10) >= 1 && parseInt(vParam, 10) <= HOOK_ITEMS.length) {
+    currentActiveIndex = parseInt(vParam, 10) - 1;
+  }
+
   function renderContent(index) {
     currentActiveIndex = index;
     const currentItem = HOOK_ITEMS[currentActiveIndex];
@@ -148,12 +148,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const vParam = urlParams.get('v');
-  if (!hasInitialHeadline && vParam && parseInt(vParam, 10) >= 1 && parseInt(vParam, 10) <= HOOK_ITEMS.length) {
-    currentActiveIndex = parseInt(vParam, 10) - 1;
+  // Only re-render if a different variant was requested via URL param
+  if (currentActiveIndex !== 3) {
+    renderContent(currentActiveIndex);
   }
-  renderContent(currentActiveIndex);
 
   let audioCtx = null;
   function playClickHaptic() {
