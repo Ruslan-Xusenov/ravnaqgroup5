@@ -491,6 +491,7 @@ button {
   );
   transform: translateX(-200%) skewX(-25deg);
   animation: shine-sweep 4.2s infinite ease-in-out;
+  animation-delay: 2.5s;
   pointer-events: none;
   z-index: 3;
 }
