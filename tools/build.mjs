@@ -52,8 +52,12 @@ for (const asset of assets) {
   await mkdir(path.dirname(destination), { recursive: true });
   await copyFile(path.join(root, asset), destination);
 }
-for (const license of ['OFL-Montserrat.txt', 'OFL-Inter.txt', 'OFL-Bebas-Neue.txt']) {
-  await copyFile(path.join(root, 'assets/perf', license), path.join(dist, 'assets/perf', license));
+for (const license of ['Montserrat-OFL.txt', 'Inter-OFL.txt', 'Bebas-Neue-OFL.txt']) {
+  try {
+    await copyFile(path.join(root, 'assets/perf', license), path.join(dist, 'assets/perf', license));
+  } catch (err) {
+    console.warn(`License copy warning: ${err.message}`);
+  }
 }
 // Keep compressed sidecars byte-for-byte consistent with the source they represent.
 for (const [name, content] of [['index.html', html], [appPath, js.code]]) {
